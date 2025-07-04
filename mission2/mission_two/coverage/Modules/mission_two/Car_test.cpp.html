@@ -1,0 +1,163 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <meta charset="utf-8"/>
+	    <title>Car_test.cpp</title>
+	    <link href="../../third-party/google-code-prettify/prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	    <script type="text/javascript" src="../../third-party/google-code-prettify/prettify.js"></script>
+	</head>
+    <body onload="prettyPrint()">
+        <h4></h4>
+        <pre class="prettyprint lang-cpp linenums">
+#include "CommonHeader.h"
+
+<span style = "background-color:#dfd">TEST(Car, createCar) {
+	std::shared_ptr&lt;Car&gt; carSedan = std::make_shared&lt;SedanCar&gt;();
+	EXPECT_NE(nullptr, carSedan);</span>
+
+<span style = "background-color:#dfd">	std::shared_ptr&lt;Car&gt; carSuv = std::make_shared&lt;SuvCar&gt;();
+	EXPECT_NE(nullptr, carSuv);</span>
+
+<span style = "background-color:#dfd">	std::shared_ptr&lt;Car&gt; carTruck = std::make_shared&lt;TruckCar&gt;();
+	EXPECT_NE(nullptr, carTruck);
+}</span>
+
+<span style = "background-color:#dfd">TEST(Car, makeParts) {
+	std::shared_ptr&lt;Car&gt; carSedan = std::make_shared&lt;SedanCar&gt;();
+	EXPECT_NE(nullptr, carSedan);</span>
+
+<span style = "background-color:#dfd">	carSedan-&gt;setEngineSystem(EngineFactory::createEngine(EngineType::GM));
+	carSedan-&gt;setEngineSystem(nullptr);
+	EXPECT_EQ(false, carSedan-&gt;checkEngine());</span>
+
+<span style = "background-color:#dfd">	carSedan-&gt;setEngineSystem(EngineFactory::createEngine(EngineType::TOYOTA));
+	carSedan-&gt;setEngineSystem(EngineFactory::createEngine(EngineType::WIA));
+	EXPECT_EQ(true, carSedan-&gt;checkEngine());</span>
+
+<span style = "background-color:#dfd">	carSedan-&gt;setBreakSystem(BreakFactory::createBreak(BrakeSystemType::BOSCH_B));
+	carSedan-&gt;setBreakSystem(BreakFactory::createBreak(BrakeSystemType::CONTINENTAL));
+	carSedan-&gt;setBreakSystem(BreakFactory::createBreak(BrakeSystemType::MANDO));</span>
+
+<span style = "background-color:#dfd">	carSedan-&gt;setSteeringSystem(SteeringFactory::createSteering(SteeringSystemType::BOSCH_S));
+	carSedan-&gt;setSteeringSystem(SteeringFactory::createSteering(SteeringSystemType::MOBIS));
+	EXPECT_EQ(true, carSedan-&gt;validParts());</span>
+
+<span style = "background-color:#dfd">	carSedan-&gt;printAllParts();
+}</span>
+
+<span style = "background-color:#dfd">TEST(Car, checkFunctionInCar) {
+	std::shared_ptr&lt;Car&gt; carSedan = std::make_shared&lt;SedanCar&gt;();
+	EXPECT_NE(nullptr, carSedan);</span>
+
+<span style = "background-color:#dfd">	carSedan-&gt;setEngineSystem(nullptr);
+	EXPECT_EQ(false, carSedan-&gt;checkEngine());</span>
+
+<span style = "background-color:#dfd">	carSedan-&gt;setEngineSystem(EngineFactory::createEngine(EngineType::GM));
+	carSedan-&gt;setBreakSystem(BreakFactory::createBreak(BrakeSystemType::CONTINENTAL));
+	carSedan-&gt;setSteeringSystem(nullptr);
+	EXPECT_EQ(false, carSedan-&gt;validParts());
+	EXPECT_EQ(false, carSedan-&gt;validParts(true));</span>
+
+<span style = "background-color:#dfd">	carSedan-&gt;setEngineSystem(EngineFactory::createEngine(EngineType::GM));
+	carSedan-&gt;setBreakSystem(BreakFactory::createBreak(BrakeSystemType::CONTINENTAL));
+	carSedan-&gt;setSteeringSystem(SteeringFactory::createSteering(SteeringSystemType::BOSCH_S));
+	EXPECT_EQ(false, carSedan-&gt;validParts());
+	EXPECT_EQ(false, carSedan-&gt;validParts(true));</span>
+
+<span style = "background-color:#dfd">	carSedan-&gt;setEngineSystem(EngineFactory::createEngine(EngineType::GM));
+	carSedan-&gt;setBreakSystem(BreakFactory::createBreak(BrakeSystemType::BOSCH_B));
+	carSedan-&gt;setSteeringSystem(SteeringFactory::createSteering(SteeringSystemType::MOBIS));
+	EXPECT_EQ(false, carSedan-&gt;validParts());
+	EXPECT_EQ(false, carSedan-&gt;validParts(true));</span>
+
+<span style = "background-color:#dfd">	carSedan-&gt;setEngineSystem(EngineFactory::createEngine(EngineType::GM));
+	carSedan-&gt;setBreakSystem(BreakFactory::createBreak(BrakeSystemType::BOSCH_B));
+	carSedan-&gt;setSteeringSystem(SteeringFactory::createSteering(SteeringSystemType::BOSCH_S));
+	EXPECT_EQ(true, carSedan-&gt;validParts());
+	EXPECT_EQ(true, carSedan-&gt;validParts(true));</span>
+
+<span style = "background-color:#dfd">	std::shared_ptr&lt;Car&gt; carSuv = std::make_shared&lt;SuvCar&gt;();
+	EXPECT_NE(nullptr, carSuv);</span>
+
+<span style = "background-color:#dfd">	carSuv-&gt;setEngineSystem(nullptr);
+	EXPECT_EQ(false, carSuv-&gt;checkEngine());</span>
+
+<span style = "background-color:#dfd">	carSuv-&gt;setEngineSystem(EngineFactory::createEngine(EngineType::TOYOTA));
+	carSuv-&gt;setBreakSystem(BreakFactory::createBreak(BrakeSystemType::CONTINENTAL));
+	carSuv-&gt;setSteeringSystem(nullptr);
+	EXPECT_EQ(false, carSuv-&gt;validParts());
+	EXPECT_EQ(false, carSuv-&gt;validParts(true));</span>
+
+<span style = "background-color:#dfd">	carSuv-&gt;setEngineSystem(EngineFactory::createEngine(EngineType::TOYOTA));
+	carSuv-&gt;setBreakSystem(BreakFactory::createBreak(BrakeSystemType::CONTINENTAL));
+	carSuv-&gt;setSteeringSystem(SteeringFactory::createSteering(SteeringSystemType::BOSCH_S));
+	EXPECT_EQ(false, carSuv-&gt;validParts());
+	EXPECT_EQ(false, carSuv-&gt;validParts(true));</span>
+
+<span style = "background-color:#dfd">	carSuv-&gt;setEngineSystem(EngineFactory::createEngine(EngineType::GM));
+	carSuv-&gt;setBreakSystem(BreakFactory::createBreak(BrakeSystemType::BOSCH_B));
+	carSuv-&gt;setSteeringSystem(SteeringFactory::createSteering(SteeringSystemType::MOBIS));
+	EXPECT_EQ(false, carSuv-&gt;validParts());
+	EXPECT_EQ(false, carSuv-&gt;validParts(true));</span>
+
+<span style = "background-color:#dfd">	carSuv-&gt;setEngineSystem(EngineFactory::createEngine(EngineType::GM));
+	carSuv-&gt;setBreakSystem(BreakFactory::createBreak(BrakeSystemType::BOSCH_B));
+	carSuv-&gt;setSteeringSystem(SteeringFactory::createSteering(SteeringSystemType::BOSCH_S));
+	EXPECT_EQ(true, carSuv-&gt;validParts());
+	EXPECT_EQ(true, carSuv-&gt;validParts(true));</span>
+
+<span style = "background-color:#dfd">	std::shared_ptr&lt;Car&gt; carTruck = std::make_shared&lt;TruckCar&gt;();
+	EXPECT_NE(nullptr, carTruck);</span>
+
+<span style = "background-color:#dfd">	carTruck-&gt;setEngineSystem(nullptr);
+	EXPECT_EQ(false, carTruck-&gt;checkEngine());</span>
+
+<span style = "background-color:#dfd">	carTruck-&gt;setEngineSystem(EngineFactory::createEngine(EngineType::WIA));
+	carTruck-&gt;setBreakSystem(BreakFactory::createBreak(BrakeSystemType::CONTINENTAL));
+	carTruck-&gt;setSteeringSystem(nullptr);
+	EXPECT_EQ(false, carTruck-&gt;validParts());
+	EXPECT_EQ(false, carTruck-&gt;validParts(true));</span>
+
+<span style = "background-color:#dfd">	carTruck-&gt;setEngineSystem(EngineFactory::createEngine(EngineType::WIA));
+	carTruck-&gt;setBreakSystem(BreakFactory::createBreak(BrakeSystemType::CONTINENTAL));
+	carTruck-&gt;setSteeringSystem(SteeringFactory::createSteering(SteeringSystemType::BOSCH_S));
+	EXPECT_EQ(false, carTruck-&gt;validParts());
+	EXPECT_EQ(false, carTruck-&gt;validParts(true));</span>
+
+<span style = "background-color:#dfd">	carTruck-&gt;setEngineSystem(EngineFactory::createEngine(EngineType::GM));
+	carTruck-&gt;setBreakSystem(BreakFactory::createBreak(BrakeSystemType::MANDO));
+	carTruck-&gt;setSteeringSystem(SteeringFactory::createSteering(SteeringSystemType::BOSCH_S));
+	EXPECT_EQ(false, carTruck-&gt;validParts());
+	EXPECT_EQ(false, carTruck-&gt;validParts(true));</span>
+
+<span style = "background-color:#dfd">	carTruck-&gt;setEngineSystem(EngineFactory::createEngine(EngineType::GM));
+	carTruck-&gt;setBreakSystem(BreakFactory::createBreak(BrakeSystemType::BOSCH_B));
+	carTruck-&gt;setSteeringSystem(SteeringFactory::createSteering(SteeringSystemType::MOBIS));
+	EXPECT_EQ(false, carTruck-&gt;validParts());
+	EXPECT_EQ(false, carTruck-&gt;validParts(true));</span>
+
+<span style = "background-color:#dfd">	carTruck-&gt;setEngineSystem(EngineFactory::createEngine(EngineType::GM));
+	carTruck-&gt;setBreakSystem(BreakFactory::createBreak(BrakeSystemType::BOSCH_B));
+	carTruck-&gt;setSteeringSystem(SteeringFactory::createSteering(SteeringSystemType::BOSCH_S));
+	EXPECT_EQ(true, carTruck-&gt;validParts());
+	EXPECT_EQ(true, carTruck-&gt;validParts(true));</span>
+
+<span style = "background-color:#dfd">	carSedan-&gt;printAllParts();
+	carSuv-&gt;printAllParts();
+	carTruck-&gt;printAllParts();
+}</span></pre>
+        <hr />
+        <table width="100%">
+            <thead>
+                <tr>
+                    <th align="center">
+                        <small>Generated by</small>
+                        <a href="https://github.com/OpenCppCoverage/OpenCppCoverage/releases">
+                            <strong>OpenCppCoverage (Version: 0.9.9.0)</strong>
+                        </a>
+                    </th>
+                </tr>
+            </thead>
+        </table>
+    </body>
+</html>
